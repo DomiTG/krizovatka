@@ -12,8 +12,10 @@ const ROAD_HALF_WIDTH = 40;   // half the total 2-lane road (= LANE_WIDTH)
 const LANE_OFFSET     = 20;   // lane centreline offset from road centreline
 
 // Lane centrelines (which x or y a car follows)
-const SB_LANE_X = CENTER_X + LANE_OFFSET;  // 370 – southbound  (right of NS road)
-const NB_LANE_X = CENTER_X - LANE_OFFSET;  // 330 – northbound  (left  of NS road)
+// Right-hand traffic: each driver keeps to the right, so SB is on the WEST (left)
+// side of the NS road (lower x) and NB is on the EAST (right) side.
+const SB_LANE_X = CENTER_X - LANE_OFFSET;  // 330 – southbound  (west/left of NS road)
+const NB_LANE_X = CENTER_X + LANE_OFFSET;  // 370 – northbound  (east/right of NS road)
 const EB_LANE_Y = CENTER_Y + LANE_OFFSET;  // 370 – eastbound   (bottom of EW road)
 const WB_LANE_Y = CENTER_Y - LANE_OFFSET;  // 330 – westbound   (top    of EW road)
 
@@ -25,16 +27,16 @@ const INT_BOTTOM = CENTER_Y + ROAD_HALF_WIDTH;  // 390
 
 // Where each approaching car enters the intersection box
 const ENTRY = {
-  NORTH: { x: SB_LANE_X, y: INT_TOP    },  // (370,310) southbound car enters from top
-  SOUTH: { x: NB_LANE_X, y: INT_BOTTOM },  // (330,390) northbound car enters from bottom
+  NORTH: { x: SB_LANE_X, y: INT_TOP    },  // (330,310) southbound car enters from top
+  SOUTH: { x: NB_LANE_X, y: INT_BOTTOM },  // (370,390) northbound car enters from bottom
   EAST:  { x: INT_RIGHT,  y: WB_LANE_Y },  // (390,330) westbound  car enters from right
   WEST:  { x: INT_LEFT,   y: EB_LANE_Y },  // (310,370) eastbound  car enters from left
 };
 
 // Where cars exit the intersection box for each exit direction
 const EXIT = {
-  SOUTH: { x: SB_LANE_X, y: INT_BOTTOM },  // (370,390)
-  NORTH: { x: NB_LANE_X, y: INT_TOP    },  // (330,310)
+  SOUTH: { x: SB_LANE_X, y: INT_BOTTOM },  // (330,390)
+  NORTH: { x: NB_LANE_X, y: INT_TOP    },  // (370,310)
   EAST:  { x: INT_RIGHT,  y: EB_LANE_Y },  // (390,370)
   WEST:  { x: INT_LEFT,   y: WB_LANE_Y },  // (310,330)
 };
@@ -88,35 +90,35 @@ const LIGHT = Object.freeze({ GREEN:'GREEN', YELLOW:'YELLOW', RED:'RED' });
 //   Facing EAST   → RIGHT = SOUTH, LEFT = NORTH
 //   Facing WEST   → RIGHT = NORTH, LEFT = SOUTH
 const INTERSECTION_PATHS = {
-  // ── FROM NORTH  (car going south, enters at (370,310)) ──────────────────
+  // ── FROM NORTH  (car going south, enters at (330,310)) ──────────────────
   'NORTH-STRAIGHT': [
-    { x: SB_LANE_X, y: INT_TOP    },   // entry  (370,310)
-    { x: SB_LANE_X, y: INT_BOTTOM },   // exit S (370,390)
+    { x: SB_LANE_X, y: INT_TOP    },   // entry  (330,310)
+    { x: SB_LANE_X, y: INT_BOTTOM },   // exit S (330,390)
   ],
   'NORTH-RIGHT': [   // turn west
-    { x: SB_LANE_X, y: INT_TOP    },   // (370,310)
-    { x: SB_LANE_X, y: WB_LANE_Y  },   // CP  (370,330) – go slightly south first
+    { x: SB_LANE_X, y: INT_TOP    },   // (330,310)
+    { x: SB_LANE_X, y: WB_LANE_Y  },   // CP  (330,330) – go slightly south first
     { x: INT_LEFT,  y: WB_LANE_Y  },   // exit W (310,330)
   ],
   'NORTH-LEFT': [    // turn east – quadratic arc: start heading south, exit heading east
-    { x: SB_LANE_X, y: INT_TOP    },   // entry (370,310)
-    { x: SB_LANE_X, y: EB_LANE_Y  },   // CP    (370,370) – anchors south-then-east curve
+    { x: SB_LANE_X, y: INT_TOP    },   // entry (330,310)
+    { x: SB_LANE_X, y: EB_LANE_Y  },   // CP    (330,370) – anchors south-then-east curve
     { x: INT_RIGHT, y: EB_LANE_Y  },   // exit E (390,370)
   ],
 
-  // ── FROM SOUTH  (car going north, enters at (330,390)) ──────────────────
+  // ── FROM SOUTH  (car going north, enters at (370,390)) ──────────────────
   'SOUTH-STRAIGHT': [
     { x: NB_LANE_X, y: INT_BOTTOM },
     { x: NB_LANE_X, y: INT_TOP    },
   ],
   'SOUTH-RIGHT': [   // turn east
-    { x: NB_LANE_X, y: INT_BOTTOM },   // (330,390)
-    { x: NB_LANE_X, y: EB_LANE_Y  },   // CP  (330,370)
+    { x: NB_LANE_X, y: INT_BOTTOM },   // (370,390)
+    { x: NB_LANE_X, y: EB_LANE_Y  },   // CP  (370,370)
     { x: INT_RIGHT, y: EB_LANE_Y  },   // exit E (390,370)
   ],
   'SOUTH-LEFT': [    // turn west – quadratic arc: start heading north, exit heading west
-    { x: NB_LANE_X, y: INT_BOTTOM },   // entry (330,390)
-    { x: NB_LANE_X, y: WB_LANE_Y  },   // CP    (330,330) – anchors north-then-west curve
+    { x: NB_LANE_X, y: INT_BOTTOM },   // entry (370,390)
+    { x: NB_LANE_X, y: WB_LANE_Y  },   // CP    (370,330) – anchors north-then-west curve
     { x: INT_LEFT,  y: WB_LANE_Y  },   // exit W (310,330)
   ],
 

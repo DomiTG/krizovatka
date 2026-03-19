@@ -138,24 +138,47 @@ class Car {
    *   a) waiting at the stop line ahead of this one, OR
    *   b) in the very early part of the intersection traversal
    *      (pathT < 0.25 means they just entered and haven't cleared)
+   *
+   * Also blocks entry if an opposing car (same phase, opposite direction)
+   * is traversing and either car is making a left turn – those paths cross.
    */
   _canEnterIntersection(allCars) {
+    const opposite = this._oppositeDir();
+
     for (const other of allCars) {
       if (other.id === this.id) continue;
-      if (other.origin !== this.origin) continue;
 
-      // Another car from same approach is closer to the stop line
-      if (other.state === CAR_STATE.WAITING ||
-          other.state === CAR_STATE.APPROACHING) {
-        if (this._isAheadInLane(other)) return false;
+      if (other.origin === this.origin) {
+        // Another car from same approach is closer to the stop line
+        if (other.state === CAR_STATE.WAITING ||
+            other.state === CAR_STATE.APPROACHING) {
+          if (this._isAheadInLane(other)) return false;
+        }
+
+        // A car just entered from the same approach
+        if (other.state === CAR_STATE.TRAVERSING && other.pathT < 0.25) {
+          return false;
+        }
       }
 
-      // A car just entered from the same approach
-      if (other.state === CAR_STATE.TRAVERSING && other.pathT < 0.25) {
-        return false;
+      // Opposing car traversing: left-turn paths cross – yield until they clear
+      if (other.origin === opposite && other.state === CAR_STATE.TRAVERSING) {
+        if (this.turn === TURN.LEFT || other.turn === TURN.LEFT) {
+          return false;
+        }
       }
     }
     return true;
+  }
+
+  /** Returns the approach direction directly opposite to this car's origin. */
+  _oppositeDir() {
+    switch (this.origin) {
+      case DIR.NORTH: return DIR.SOUTH;
+      case DIR.SOUTH: return DIR.NORTH;
+      case DIR.EAST:  return DIR.WEST;
+      case DIR.WEST:  return DIR.EAST;
+    }
   }
 
   // ── Intersection traversal ─────────────────────────────────────────────────
@@ -167,8 +190,18 @@ class Car {
     );
   }
 
+  /**
+   * Decide the turn direction when first reaching the stop line so that
+   * _canEnterIntersection can check for conflicting opposing paths before entry.
+   */
+  _preCommitTurn(settings) {
+    if (this.turn === null) {
+      this.turn = this._chooseTurn(settings);
+    }
+  }
+
   _enterIntersection(settings) {
-    this.turn       = this._chooseTurn(settings);
+    // turn was pre-committed via _preCommitTurn; use it directly
     const key       = `${this.origin}-${this.turn}`;
     this.path       = INTERSECTION_PATHS[key];
     this.pathLength = bezierLength(this.path);
@@ -228,6 +261,7 @@ class Car {
     // Reached stop line?
     if (distToStop <= 1) {
       this._snapToStopLine();
+      this._preCommitTurn(settings);   // decide turn before entry conflict check
       if (lightCtrl.canPass(this.origin) && this._canEnterIntersection(allCars)) {
         this._enterIntersection(settings);
       } else {
@@ -239,6 +273,7 @@ class Car {
 
   _updateWaiting(dt, lightCtrl, allCars, settings) {
     this.waitTime += dt;
+    this._preCommitTurn(settings);   // ensure turn is set (usually already is)
     if (lightCtrl.canPass(this.origin) && this._canEnterIntersection(allCars)) {
       this._enterIntersection(settings);
     }
