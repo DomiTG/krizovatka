@@ -12,7 +12,7 @@
       appearance: none;
       height: 4px;
       border-radius: 2px;
-      background: #334155;
+      background: #e5e7eb;
       outline: none;
       cursor: pointer;
       width: 100%;
@@ -23,7 +23,7 @@
       width: 14px;
       height: 14px;
       border-radius: 50%;
-      background: #38bdf8;
+      background: #2563eb;
       border: 2px solid #fff;
       cursor: pointer;
     }
@@ -31,18 +31,18 @@
       width: 14px;
       height: 14px;
       border-radius: 50%;
-      background: #38bdf8;
+      background: #2563eb;
       border: 2px solid #fff;
       cursor: pointer;
     }
   </style>
 </head>
-<body class="h-screen flex flex-col bg-slate-900 text-slate-200 text-sm font-sans overflow-hidden">
+<body class="h-screen flex flex-col bg-gray-50 text-gray-900 text-sm font-sans overflow-hidden">
 
   <!-- ── Header ──────────────────────────────────────────────────────────── -->
-  <header class="flex items-center gap-3 px-4 py-2 bg-slate-800 border-b border-slate-700 shrink-0">
-    <h1 class="font-bold text-sky-400">🚦 Traffic Intersection Simulator</h1>
-    <span class="text-xs font-bold bg-sky-700 text-sky-100 px-2 py-0.5 rounded-full uppercase tracking-widest">Live</span>
+  <header class="flex items-center gap-3 px-4 py-2 bg-white border-b border-gray-200 shrink-0">
+    <h1 class="font-bold text-blue-600">🚦 Traffic Intersection Simulator</h1>
+    <span class="text-xs font-bold bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full uppercase tracking-widest">Live</span>
   </header>
 
   <!-- ── Main ────────────────────────────────────────────────────────────── -->
@@ -54,37 +54,37 @@
     </div>
 
     <!-- ── Control panel ───────────────────────────────────────────────── -->
-    <div class="flex-1 bg-slate-900 border-l border-slate-700 px-3 py-3 overflow-y-auto
+    <div class="flex-1 bg-gray-50 border-l border-gray-200 px-3 py-3 overflow-y-auto
                 min-w-[260px] max-w-[300px] flex flex-col gap-3">
 
       <!-- Traffic Lights card -->
-      <div class="bg-slate-800 rounded-lg border border-slate-700 p-3">
-        <h2 class="text-xs font-bold uppercase tracking-widest text-sky-400 mb-2">🚦 Traffic Lights</h2>
+      <div class="bg-white rounded-lg border border-gray-200 shadow-sm p-3">
+        <h2 class="text-xs font-bold uppercase tracking-widest text-blue-600 mb-2">🚦 Traffic Lights</h2>
 
         <!-- State indicators -->
-        <div class="flex items-center gap-2 mb-1 text-xs text-slate-400">
+        <div class="flex items-center gap-2 mb-1 text-xs text-gray-500">
           <span id="dot-ns" class="w-2.5 h-2.5 rounded-full shrink-0"></span>
           North / South
         </div>
-        <div class="flex items-center gap-2 mb-3 text-xs text-slate-400">
+        <div class="flex items-center gap-2 mb-3 text-xs text-gray-500">
           <span id="dot-ew" class="w-2.5 h-2.5 rounded-full shrink-0"></span>
           East / West
         </div>
 
         <!-- Green duration -->
         <div class="mb-2">
-          <div class="flex justify-between text-xs text-slate-400 mb-1">
+          <div class="flex justify-between text-xs text-gray-500 mb-1">
             <span>Green duration</span>
-            <output id="ns-green-val" class="text-sky-400 font-semibold">15s</output>
+            <output id="ns-green-val" class="text-blue-600 font-semibold">15s</output>
           </div>
           <input type="range" id="ns-green" min="5" max="60" step="1" value="15" data-unit="s" />
         </div>
 
         <!-- Yellow duration -->
         <div class="mb-3">
-          <div class="flex justify-between text-xs text-slate-400 mb-1">
+          <div class="flex justify-between text-xs text-gray-500 mb-1">
             <span>Yellow duration</span>
-            <output id="ns-yellow-val" class="text-sky-400 font-semibold">3s</output>
+            <output id="ns-yellow-val" class="text-blue-600 font-semibold">3s</output>
           </div>
           <input type="range" id="ns-yellow" min="1" max="10" step="1" value="3" data-unit="s" />
         </div>
@@ -94,14 +94,14 @@
         <input type="range" id="ew-yellow" min="1" max="10" step="1" value="3"  hidden />
 
         <!-- Manual control toggle -->
-        <div class="flex items-center justify-between text-xs text-slate-400 mb-2">
+        <div class="flex items-center justify-between text-xs text-gray-500 mb-2">
           <span>Manual control</span>
           <label class="relative inline-flex items-center cursor-pointer">
             <input type="checkbox" id="manual-toggle" class="sr-only peer" />
-            <div class="w-8 h-4 bg-slate-600 rounded-full relative
+            <div class="w-8 h-4 bg-gray-200 rounded-full relative
                         after:absolute after:content-[''] after:top-0.5 after:left-0.5
                         after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all
-                        peer-checked:bg-sky-600 peer-checked:after:translate-x-4"></div>
+                        peer-checked:bg-blue-600 peer-checked:after:translate-x-4"></div>
           </label>
         </div>
 
@@ -109,60 +109,60 @@
         <div id="manual-panel" class="hidden gap-2">
           <button id="btn-ns-green"
                   class="flex-1 py-1 text-xs font-semibold border border-green-500
-                         text-green-400 rounded hover:bg-green-500/20 transition-colors">
+                         text-green-600 rounded hover:bg-green-500/20 transition-colors">
             N/S Green
           </button>
           <button id="btn-ew-green"
                   class="flex-1 py-1 text-xs font-semibold border border-green-500
-                         text-green-400 rounded hover:bg-green-500/20 transition-colors">
+                         text-green-600 rounded hover:bg-green-500/20 transition-colors">
             E/W Green
           </button>
         </div>
       </div>
 
       <!-- Simulation card -->
-      <div class="bg-slate-800 rounded-lg border border-slate-700 p-3">
-        <h2 class="text-xs font-bold uppercase tracking-widest text-sky-400 mb-2">🚗 Simulation</h2>
+      <div class="bg-white rounded-lg border border-gray-200 shadow-sm p-3">
+        <h2 class="text-xs font-bold uppercase tracking-widest text-blue-600 mb-2">🚗 Simulation</h2>
 
         <!-- Spawn rate -->
         <div class="mb-2">
-          <div class="flex justify-between text-xs text-slate-400 mb-1">
+          <div class="flex justify-between text-xs text-gray-500 mb-1">
             <span>Spawn rate (cars/s)</span>
-            <output id="spawn-rate-val" class="text-sky-400 font-semibold">0.4</output>
+            <output id="spawn-rate-val" class="text-blue-600 font-semibold">0.4</output>
           </div>
           <input type="range" id="spawn-rate" min="0.05" max="1.5" step="0.05" value="0.4" />
         </div>
 
         <!-- Car speed -->
         <div class="mb-3">
-          <div class="flex justify-between text-xs text-slate-400 mb-1">
+          <div class="flex justify-between text-xs text-gray-500 mb-1">
             <span>Car speed</span>
-            <output id="car-speed-val" class="text-sky-400 font-semibold">2.5</output>
+            <output id="car-speed-val" class="text-blue-600 font-semibold">2.5</output>
           </div>
           <input type="range" id="car-speed" min="0.5" max="6" step="0.5" value="2.5" />
         </div>
 
         <!-- Turn probabilities -->
         <div class="mb-2">
-          <div class="flex justify-between text-xs text-slate-400 mb-1">
+          <div class="flex justify-between text-xs text-gray-500 mb-1">
             <span>Straight probability</span>
-            <output id="straight-prob-val" class="text-sky-400 font-semibold">0.6</output>
+            <output id="straight-prob-val" class="text-blue-600 font-semibold">0.6</output>
           </div>
           <input type="range" id="straight-prob" min="0" max="1" step="0.05" value="0.6" />
         </div>
 
         <div class="mb-2">
-          <div class="flex justify-between text-xs text-slate-400 mb-1">
+          <div class="flex justify-between text-xs text-gray-500 mb-1">
             <span>Left probability</span>
-            <output id="left-prob-val" class="text-sky-400 font-semibold">0.2</output>
+            <output id="left-prob-val" class="text-blue-600 font-semibold">0.2</output>
           </div>
           <input type="range" id="left-prob" min="0" max="1" step="0.05" value="0.2" />
         </div>
 
         <div class="mb-3">
-          <div class="flex justify-between text-xs text-slate-400 mb-1">
+          <div class="flex justify-between text-xs text-gray-500 mb-1">
             <span>Right probability</span>
-            <output id="right-prob-val" class="text-sky-400 font-semibold">0.2</output>
+            <output id="right-prob-val" class="text-blue-600 font-semibold">0.2</output>
           </div>
           <input type="range" id="right-prob" min="0" max="1" step="0.05" value="0.2" />
         </div>
@@ -170,46 +170,46 @@
         <!-- Pause / Reset buttons -->
         <div class="flex gap-2">
           <button id="btn-pause"
-                  class="flex-1 py-1.5 text-xs font-semibold bg-sky-600 text-white
-                         rounded hover:bg-sky-700 transition-colors">
+                  class="flex-1 py-1.5 text-xs font-semibold bg-blue-600 text-white
+                         rounded hover:bg-blue-700 transition-colors">
             ⏸ Pause
           </button>
           <button id="btn-reset"
-                  class="flex-1 py-1.5 text-xs font-semibold border border-red-500
-                         text-red-400 rounded hover:bg-red-500/20 transition-colors">
+                  class="flex-1 py-1.5 text-xs font-semibold border border-red-400
+                         text-red-500 rounded hover:bg-red-500/20 transition-colors">
             ↺ Reset
           </button>
         </div>
       </div>
 
       <!-- Statistics card -->
-      <div class="bg-slate-800 rounded-lg border border-slate-700 p-3">
-        <h2 class="text-xs font-bold uppercase tracking-widest text-sky-400 mb-2">📊 Statistics</h2>
+      <div class="bg-white rounded-lg border border-gray-200 shadow-sm p-3">
+        <h2 class="text-xs font-bold uppercase tracking-widest text-blue-600 mb-2">📊 Statistics</h2>
 
         <div class="grid grid-cols-2 gap-2">
-          <div class="bg-slate-900 rounded p-2 border border-slate-700">
-            <div class="text-xs uppercase tracking-wide text-slate-500 mb-0.5">Cars passed</div>
-            <div class="text-lg font-bold text-sky-400" id="stat-passed">0</div>
+          <div class="bg-gray-50 rounded p-2 border border-gray-200">
+            <div class="text-xs uppercase tracking-wide text-gray-400 mb-0.5">Cars passed</div>
+            <div class="text-lg font-bold text-blue-600" id="stat-passed">0</div>
           </div>
-          <div class="bg-slate-900 rounded p-2 border border-slate-700">
-            <div class="text-xs uppercase tracking-wide text-slate-500 mb-0.5">Active cars</div>
-            <div class="text-lg font-bold text-sky-400" id="stat-active">0</div>
+          <div class="bg-gray-50 rounded p-2 border border-gray-200">
+            <div class="text-xs uppercase tracking-wide text-gray-400 mb-0.5">Active cars</div>
+            <div class="text-lg font-bold text-blue-600" id="stat-active">0</div>
           </div>
-          <div class="bg-slate-900 rounded p-2 border border-slate-700">
-            <div class="text-xs uppercase tracking-wide text-slate-500 mb-0.5">Waiting</div>
-            <div class="text-lg font-bold text-sky-400" id="stat-waiting">0</div>
+          <div class="bg-gray-50 rounded p-2 border border-gray-200">
+            <div class="text-xs uppercase tracking-wide text-gray-400 mb-0.5">Waiting</div>
+            <div class="text-lg font-bold text-blue-600" id="stat-waiting">0</div>
           </div>
-          <div class="bg-slate-900 rounded p-2 border border-slate-700">
-            <div class="text-xs uppercase tracking-wide text-slate-500 mb-0.5">Sim time</div>
-            <div class="text-lg font-bold text-sky-400" id="stat-time">0:00</div>
+          <div class="bg-gray-50 rounded p-2 border border-gray-200">
+            <div class="text-xs uppercase tracking-wide text-gray-400 mb-0.5">Sim time</div>
+            <div class="text-lg font-bold text-blue-600" id="stat-time">0:00</div>
           </div>
-          <div class="bg-slate-900 rounded p-2 border border-slate-700">
-            <div class="text-xs uppercase tracking-wide text-slate-500 mb-0.5">Avg wait</div>
-            <div class="text-lg font-bold text-sky-400" id="stat-avg-wait">0.0s</div>
+          <div class="bg-gray-50 rounded p-2 border border-gray-200">
+            <div class="text-xs uppercase tracking-wide text-gray-400 mb-0.5">Avg wait</div>
+            <div class="text-lg font-bold text-blue-600" id="stat-avg-wait">0.0s</div>
           </div>
-          <div class="bg-slate-900 rounded p-2 border border-slate-700">
-            <div class="text-xs uppercase tracking-wide text-slate-500 mb-0.5">Max wait</div>
-            <div class="text-lg font-bold text-sky-400" id="stat-max-wait">0.0s</div>
+          <div class="bg-gray-50 rounded p-2 border border-gray-200">
+            <div class="text-xs uppercase tracking-wide text-gray-400 mb-0.5">Max wait</div>
+            <div class="text-lg font-bold text-blue-600" id="stat-max-wait">0.0s</div>
           </div>
         </div>
       </div>
