@@ -73,7 +73,8 @@ class UI {
     if (manualToggle) {
       manualToggle.addEventListener('change', () => {
         s.lights.manual = manualToggle.checked;
-        manualPanel.style.display = manualToggle.checked ? 'flex' : 'none';
+        manualPanel.classList.toggle('hidden', !manualToggle.checked);
+        manualPanel.classList.toggle('flex',   manualToggle.checked);
       });
     }
 
@@ -174,7 +175,14 @@ class UI {
   _setLightDot(id, state) {
     const el = document.getElementById(id);
     if (!el) return;
-    el.className = 'light-dot ' + state.toLowerCase();
+    const palette = {
+      green:  { bg: '#34c759', glow: '#34c759' },
+      yellow: { bg: '#ffcc00', glow: '#ffcc00' },
+      red:    { bg: '#ff3b30', glow: '#ff3b30' },
+    };
+    const c = palette[state.toLowerCase()] || { bg: '#888', glow: '#888' };
+    el.style.backgroundColor = c.bg;
+    el.style.boxShadow = `0 0 5px ${c.glow}`;
   }
 
   _setText(id, value) {

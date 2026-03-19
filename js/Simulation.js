@@ -324,16 +324,16 @@ class Simulation {
     ctx.strokeStyle = '#fff';
     ctx.lineWidth   = 3;
 
-    // North approach (SB lane) – white line at top of intersection
+    // North approach (SB lane – west half) – white line at top of intersection
     ctx.beginPath();
-    ctx.moveTo(CENTER_X, INT_TOP);
-    ctx.lineTo(CENTER_X + ROAD_HALF_WIDTH, INT_TOP);
+    ctx.moveTo(CENTER_X - ROAD_HALF_WIDTH, INT_TOP);
+    ctx.lineTo(CENTER_X, INT_TOP);
     ctx.stroke();
 
-    // South approach (NB lane)
+    // South approach (NB lane – east half)
     ctx.beginPath();
-    ctx.moveTo(CENTER_X - ROAD_HALF_WIDTH, INT_BOTTOM);
-    ctx.lineTo(CENTER_X, INT_BOTTOM);
+    ctx.moveTo(CENTER_X, INT_BOTTOM);
+    ctx.lineTo(CENTER_X + ROAD_HALF_WIDTH, INT_BOTTOM);
     ctx.stroke();
 
     // East approach (WB lane)
